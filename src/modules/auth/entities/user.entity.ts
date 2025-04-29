@@ -5,6 +5,12 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
+export enum RolUsuario {
+  ADMIN = 'admin',
+  USUARIO = 'usuario',
+  CLIENTE = 'cliente',
+}
+
 @Entity()
 export class Usuario {
   @PrimaryGeneratedColumn('uuid')
@@ -13,14 +19,14 @@ export class Usuario {
   @Column()
   nombre: string;
 
-  @Column({ unique: true })
+  @Column({ unique: false })
   email: string;
 
   @Column()
   password: string;
 
-  @Column({ default: 'usuario' })
-  rol: string; // Puede ser: 'usuario', 'admin', etc.
+  @Column({ type: 'enum', enum: RolUsuario, default: RolUsuario.CLIENTE })
+  rol: RolUsuario;
 
   @CreateDateColumn()
   creadoEn: Date;
